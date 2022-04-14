@@ -14,18 +14,62 @@ varia_rep(N, L, [H | Tail]) :-
 del(X, [X | T], T).
 del(X, [H | T], [H | NT]) :- del(X, T, NT).
 
-solution(Secret) :- generate(S), solution_(Secret, S, E, [1,1,2,2]).
+solution(Secret) :- 
+    generate(S), 
+    solution_(Secret, S, [1,1,2,2]).
 
-solution_(Secret, _, _, Guess) :- get_eval(Secret, Guess, 4, 0), write('Secret odhalen: '), write(Guess), nl.
-solution(Secret, S, E, Guess) :-
+solution_(Secret, _, Guess) :- 
+    get_eval(Secret, Guess, 4, 0), 
+    write('Secret odhalen: '), write(Guess), nl.
+
+solution_(Secret, S, Guess) :-
     get_eval(Secret, Guess, B, W),
     filterS(S, Guess, B, W, NewS),
-    write('Délka S je: '), length(NewS, L), write(L), nl.
+    length(NewS, L),
+    write('Délka S je: '), write(L), nl,
+    get_evals(Guess, NewS, E),
+    next_guess(NewS, E, NextGuess),
+    solution_(Secret, NewS, NextGuess).
 
-dfe(Code, S, B, W, Deleted) :- filterS(S, Code, B, W, NewS), length(NewS, Deleted).
+get_evals(_, [], []).
+get_evals(Guess, [Hs | Ts], [[B, W] | Te]) :-
+    get_eval(Guess, Hs, B, W),
+    get_evals(Guess, Ts, Te).
 
-dfae(_, _, [], []).
-%dfae(Code, S, [[B,W]|]
+% --- Score ------------------------------------------------
+
+% minimum deleted for every evaluation
+% zjisti score, což je minimalni pocet odstranenych prvku z S pro kazdou
+% evaluaci
+score(Code,S,E,MinDeleted):- dfae(Code,S,E,Deleted),
+                             sort(Deleted,[MinDeleted|_]).
+
+%--- Next guess ------------------------------------------------
+
+% vybere prvek s maximalnim poctem odstranenych prvku z S
+next_guess(S,E,NextGuess):-next_guess_(S,S,E,ScoreList),
+                           sort(ScoreList,Sorted),
+                           reverse(Sorted,[[NextGuess|_]|_]).
+
+next_guess_([],_,_,[]).
+next_guess_([H|Ss],S,E,[[H,MinDeleted]|ScoreList]):- score(H,S,E,MinDeleted),
+                                                     next_guess_(Ss,S,E,ScoreList).
+
+
+% deleted for one evaluation
+% Pocet prvku odstranenych z S, kde prvek je odstranen pokud nema stejne
+% B&W score vyci kodu, jako je zade B&W score
+dfe(Code, S, B, W, Deleted):- filterS(S, Code, B, W, NewS),
+                              length(NewS,L1),
+                              length(S,L2),
+                              Deleted is L2-L1.
+
+
+% deleted for all evaluations
+% pocet odstranenych z S pro všechny mozné evaluace
+dfae(_,_,[],[]).
+dfae(Code,S,[[B,W]|Es],[Count|Deleted]):- dfe(Code, S, B, W, Count),
+                                          dfae(Code,S,Es,Deleted).
 
 generate(Vars) :- findall(X, varia_rep(4, [1, 2, 3, 4, 5, 6], X), Vars).
 
@@ -69,27 +113,7 @@ remover( _, [], []).
 remover( R, [R|T], T).
 remover( R, [H|T], [H|T2]) :- H \= R, remover( R, T, T2).
 
-%get_eval([1,1,2,2], [1,3,2,1], X, Y).
-get_eval_2(Secret, Guess, BlackPegs, WhitePegs) :-
-    extract_matching(Secret, Guess, SecretLeft, GuessLeft),
-    length(Guess, GuessLen),
-    length(SecretLeft, LeftLen),
-    BlackPegs is GuessLen - LeftLen,
-    matching_colors(SecretLeft, GuessLeft, NonMatchedSecret, NonMatchedGuess),
-    length(NonMatchedSecret, NonMatchedLen),
-    WhitePegs is LeftLen - NonMatchedLen.
-
-extract_matching([], [], [], []).
-extract_matching([HS | TS], [HS | TG], SL, GL) :- extract_matching(TS, TG, SL, GL).
-extract_matching([HS | TS], [HG | TG], [HS | SL], [HG | GL]) :- extract_matching(TS, TG, SL, GL).
-
-matching_colors(Secret, [], []).
-matching_colors(Secret, [HG | TG], SL) :- 
-    member(HG, Secret), 
-    del(HG, Secret, SubLeft), 
-    matching_colors(SubLeft, TG, SL).
-
-matching_colors(Secret, [HG | TG], [HG | SL]) :- matching_colors(Secret, TG, SL).
+/* Úkol z body z jiného cvičení */
 
 p(0) :- nl.
 p(N) :- N1 is N-1, write('*'), p(N1).
