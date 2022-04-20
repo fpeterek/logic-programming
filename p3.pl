@@ -71,6 +71,21 @@ knightpath(X, Y, P) :- kpath(X, Y, [X], P1), reverse(P1, P).
 writepath([]).
 writepath([H | T]) :- write(H), nl, writepath(T).
 
+/* Visit each corner exactly once */
+corners(Paths) :-
+    findall(Path, cornerpath([0, 0], [2, 1], Path), Paths),
+    length(Paths, Len),
+    write('Number of paths: '), write(Len), nl,
+    printall(Paths).
+
+printall([]).
+printall([H | T]) :- write(H), nl, printall(T).
+     
+cpath(X, X, P, P) :- member([0, 0], P), member([2, 0], P), member([0, 2], P), member([2, 2], P).
+cpath(X, Y, T, P) :- move(X, Z), not(member(Z, T)), cpath(Z, Y, [Z | T], P).
+
+cornerpath(X, Y, P) :- cpath(X, Y, [X], P1), reverse(P1, P).
+
 /* String operations */
 
 readln(Len, Str, R) :- atom_chars(Str, C), append(Pref, _, C), length(Pref, Len), atom_chars(R, Pref).
