@@ -2,7 +2,7 @@
 
 reset :- retract(s(_, _)), fail.
 
-%Offense
+% Offense xxxxx
 
 %Tah počítače : pravidlo 1 Xxxxx
 tp :-
@@ -16,9 +16,9 @@ tp :-
 
 %Tah počítače : pravidlo 1 xXxxx
 tp :-
-    s(S1, x), s(S2, ' '),
+    s(S1, x),
     o(S1, S2, S3, S4, S5),
-    s(S1, x), s(S3, x), s(S4, x), s(S5, x),
+    s(S1, x), s(S2, ' '), s(S3, x), s(S4, x), s(S5, x),
     retract(s(S2, ' ')), assert(s(S2, x)),
     write([S2, 1]), nl,
     vypis_p,
@@ -26,9 +26,9 @@ tp :-
 
 %Tah počítače : pravidlo 1 xxXxx
 tp :-
-    s(S1, x), s(S3, ' '),
+    s(S1, x),
     o(S1, S2, S3, S4, S5),
-    s(S1, x), s(S2, x), s(S4, x), s(S5, x),
+    s(S1, x), s(S2, x), s(S3, ' '), s(S4, x), s(S5, x),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 1]), nl,
     vypis_p,
@@ -36,9 +36,9 @@ tp :-
 
 %Tah počítače : pravidlo 1 xxxXx
 tp :-
-    s(S1, x), s(S4, ' '),
+    s(S1, x),
     o(S1, S2, S3, S4, S5),
-    s(S1, x), s(S2, x), s(S3, x), s(S5, x),
+    s(S1, x), s(S2, x), s(S3, x), s(S4, ' '), s(S5, x),
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 1]), nl,
     vypis_p,
@@ -46,15 +46,15 @@ tp :-
 
 %Tah počítače : pravidlo 1 xxxxX
 tp :-
-    s(S1, x), s(S5, ' '),
+    s(S1, x),
     o(S1, S2, S3, S4, S5),
-    s(S1, x), s(S2, x), s(S3, x), s(S4, x),
+    s(S1, x), s(S2, x), s(S3, x), s(S4, x), s(S5, ' '),
     retract(s(S5, ' ')), assert(s(S5, x)),
     write([S5, 1]), nl,
     vypis_p,
     test_v(x).
 
-%Defense
+% Defense xxxxx
 
 %Tah počítače : pravidlo 1 Xxxxx
 tp :-
@@ -68,9 +68,9 @@ tp :-
 
 %Tah počítače : pravidlo 1 xXxxx
 tp :-
-    s(S1, o), s(S2, ' '),
+    s(S1, o),
     o(S1, S2, S3, S4, S5),
-    s(S1, o), s(S3, o), s(S4, o), s(S5, o),
+    s(S1, o), s(S2, ' '), s(S3, o), s(S4, o), s(S5, o),
     retract(s(S2, ' ')), assert(s(S2, x)),
     write([S2, 1]), nl,
     vypis_p,
@@ -78,9 +78,9 @@ tp :-
 
 %Tah počítače : pravidlo 1 xxXxx
 tp :-
-    s(S1, o), s(S3, ' '),
+    s(S1, o),
     o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S4, o), s(S5, o),
+    s(S2, o), s(S3, ' '), s(S4, o), s(S5, o),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 1]), nl,
     vypis_p,
@@ -88,9 +88,9 @@ tp :-
 
 %Tah počítače : pravidlo 1 xxxXx
 tp :-
-    s(S1, o), s(S4, ' '),
+    s(S1, o),
     o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S3, o), s(S5, o),
+    s(S2, o), s(S3, o), s(S4, ' '), s(S5, o),
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 1]), nl,
     vypis_p,
@@ -98,42 +98,112 @@ tp :-
 
 %Tah počítače : pravidlo 1 xxxxX
 tp :-
-    s(S1, o), s(S5, ' '),
+    s(S1, o), 
     o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S3, o), s(S4, o),
+    s(S2, o), s(S3, o), s(S4, o), s(S5, ' '),
     retract(s(S5, ' ')), assert(s(S5, x)),
     write([S5, 1]), nl,
     vypis_p,
     test_v(x).
 
-%Tah počítače : pravidlo 4 Xxxx
+% Offense xxxx
 
+%Tah počítače : pravidlo 4 Xxxx
+%Předpoklad - oponent není debil a umí blokovat trojice/čtveřice - tedy čtveřici je třeba tvořit pouze pokud je trojice volná z obou stran.
 tp :-
-    s(S1, ' '),
-    (s(S5, ' '); s(S5, o)),
-    o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S3, o), s(S4, o),
-    retract(s(S1, ' ')), assert(s(S1, x)),
-    write([S1, 1]), nl,
+    (s(S1, ' '); s(S1, x)),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, ' '), s(S3, x), s(S4, x), s(S5, x),
+    (s(S6, ' '); s(S6, x)),
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 1]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače : pravidlo 4 xXxx
+tp :-
+    (s(S1, ' '), s(S1, x)),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, x), s(S3, ' '), s(S4, x), s(S5, x),
+    (s(S6, ' '); s(S6, x)),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 1]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače : pravidlo 4 xxXx
+tp :-
+    (s(S1, x); s(S1, ' ')),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, x),
+    (s(S6, x); s(S6, ' ')),
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 1]), nl,
     vypis_p,
     test_v(x).
 
 %Tah počítače : pravidlo 4 xxxX
-
 tp :-
-    s(S5, ' '),
-    (s(S1, ' '); s(S1, o)),
-    o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S3, o), s(S4, o),
+    (s(S1, ' '); s(S1, x)),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, x), s(S3, x), s(S4, x), s(S5, ' '), 
+    (s(S6, x); s(S6, ' ')),
     retract(s(S5, ' ')), assert(s(S5, x)),
     write([S5, 1]), nl,
     vypis_p,
     test_v(x).
 
-%Offense
+% Defense xxxx
 
-%Tah počítače : pravidlo 2 kříž
-tp :- 
+%Tah počítače : pravidlo 4 Xxxx
+%Předpoklad - oponent není debil a umí blokovat trojice/čtveřice - tedy čtveřici je třeba tvořit pouze pokud je trojice volná z obou stran.
+tp :-
+    (s(S1, ' '); s(S1, o)),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, ' '), s(S3, o), s(S4, o), s(S5, o),
+    (s(S6, ' '); s(S6, o)),
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 1]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače : pravidlo 4 xXxx
+tp :-
+    (s(S1, ' '), s(S1, o)),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, o), s(S3, ' '), s(S4, o), s(S5, o),
+    (s(S6, ' '); s(S6, o)),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 1]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače : pravidlo 4 xxXx
+tp :-
+    (s(S1, o); s(S1, ' ')),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, o), s(S3, o), s(S4, ' '), s(S5, o),
+    (s(S6, o); s(S6, ' ')),
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 1]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače : pravidlo 4 xxxX
+tp :-
+    (s(S1, ' '); s(S1, o)),
+    o6(S1, S2, S3, S4, S5, S6),
+    s(S2, o), s(S3, o), s(S4, o), s(S5, ' '), 
+    (s(S6, o); s(S6, ' ')),
+    retract(s(S5, ' ')), assert(s(S5, x)),
+    write([S5, 1]), nl,
+    vypis_p,
+    test_v(x).
+
+% Offense - kříž
+
+%Tah počítače - pravidlo 2 kříž
+tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, ' '), s(S4, x), s(S5, ' '),
     s(S6, ' '), S1 \= S6, o(S6, S7, S3, S8, S9),
@@ -143,21 +213,43 @@ tp :-
     vypis_p,
     test_v(x).
 
-%Tah počítače : pravidlo 2 kříž
-tp :- 
+%Tah počítače - pravidlo 2 kříž
+tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S3, o), s(S4, o), s(S5, ' '),
+    s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
     s(S6, ' '), S1 \= S6, o(S6, S2, S7, S8, S9),
-    s(S7, o), s(S8, o), s(S9, ' '),
+    s(S7, x), s(S8, x), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 2]), nl,
     vypis_p,
     test_v(x).
 
-%Defense
+%Tah počítače - pravidlo 2 kříž ukazující doprava
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 2]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače - pravidlo 2 kříž ukazující doleva
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 2]), nl,
+    vypis_p,
+    test_v(x).
+
+% Defense - kříž
 
 %Tah počítače : pravidlo 3 kříž
-tp :- 
+tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, o), s(S3, ' '), s(S4, o), s(S5, ' '),
     s(S6, ' '), S1 \= S6, o(S6, S7, S3, S8, S9),
@@ -168,7 +260,7 @@ tp :-
     test_v(x).
 
 %Tah počítače : pravidlo 3 kříž
-tp :- 
+tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, o), s(S4, o), s(S5, ' '),
     s(S6, ' '), S1 \= S6, o(S6, S2, S7, S8, S9),
@@ -178,24 +270,176 @@ tp :-
     vypis_p,
     test_v(x).
 
-%Tah na volné pole, x - počítač, o - hráč
-tp :- 
+%Tah počítače - pravidlo 3 kříž ukazující doprava
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, o), s(S4, o), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S7, o), s(S8, o), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 2]), nl,
+    vypis_p,
+    test_v(x).
+
+%Tah počítače - pravidlo 3 kříž ukazující doleva
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, o), s(S3, o), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, o), s(S8, o), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 2]), nl,
+    vypis_p,
+    test_v(x).
+
+% Obrana není dále potřeba (asi)
+
+% Robíme kříže - položení čtvrtého pole, pravidlo 10
+
+% Kříž doprava
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, ' '), s(S4, x), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+% To samé, ale kříž doleva
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, ' '), s(S8, x), s(S9, ' '),
+    retract(s(S7, ' ')), assert(s(S7, x)),
+    write([S7, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, ' '), s(S9, ' '),
+    retract(s(S8, ' ')), assert(s(S8, x)),
+    write([S8, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+% Robíme kříže - položení třetího pole, pravidlo 11
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S8, ' ')), assert(s(S8, x)),
+    write([S8, 11]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S8, ' ')), assert(s(S8, x)),
+    write([S8, 11]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 11]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 11]), nl,
+    vypis_p,
+    test_v(x).
+
+% Robíme kříže - položení druhého pole, pravidlo 12
+% TODO: Continue
+
+% Tah na volné pole, x - počítač, o - hráč
+tp :-
     s(S, ' '),
-    retract(s(S, ' ')),
-    assert(s(S, x)),
+    retract(s(S, ' ')), assert(s(S, x)),
     write([S, nahodny_tah]), nl,
     vypis_p,
     test_v(x).
 
-%Tah hráče
+% Tah hráče
 tah(S) :-
     s(S, ' '),
-    retract(s(S, ' ')),
-    assert(s(S, o)),
+    retract(s(S, ' ')), assert(s(S, o)),
     vypis_p,
     test_v(o),
     tp.
 
+% Objekty - 5 polí
 o([X, Y], [X1, Y], [X2, Y], [X3, Y], [X4, Y]) :-
     X1 is X+1, X2 is X+2, X3 is X+3, X4 is X+4.
 
@@ -210,6 +454,22 @@ o([X, Y], [X1, Y1], [X2, Y2], [X3, Y3], [X4, Y4]) :-
     X1 is X+1, X2 is X+2, X3 is X+3, X4 is X+4,
     Y1 is Y-1, Y2 is Y-2, Y3 is Y-3, Y4 is Y-4.
 
+% Objekty - 6 polí
+o6([X, Y], [X1, Y], [X2, Y], [X3, Y], [X4, Y], [X5, Y]) :-
+    X1 is X+1, X2 is X+2, X3 is X+3, X4 is X+4, X5 is X+5.
+
+o6([X, Y], [X, Y1], [X, Y2], [X, Y3], [X, Y4], [X, Y5]) :-
+    Y1 is Y+1, Y2 is Y+2, Y3 is Y+3, Y4 is Y+4, Y5 is Y+5.
+
+o6([X, Y], [X1, Y1], [X2, Y2], [X3, Y3], [X4, Y4], [X5, Y5]) :-
+    X1 is X+1, X2 is X+2, X3 is X+3, X4 is X+4, X5 is X+5,
+    Y1 is Y+1, Y2 is Y+2, Y3 is Y+3, Y4 is Y+4, Y5 is Y+5.
+
+o6([X, Y], [X1, Y1], [X2, Y2], [X3, Y3], [X4, Y4], [X5, Y5]) :-
+    X1 is X+1, X2 is X+2, X3 is X+3, X4 is X+4, X5 is X+5,
+    Y1 is Y-1, Y2 is Y-2, Y3 is Y-3, Y4 is Y-4, Y5 is Y-5.
+
+% Test výhry
 test_v(H) :-
     s(S1, H),
     o(S1, S2, S3, S4, S5),
@@ -222,6 +482,7 @@ test_v(H) :-
 
 test_v(_).
 
+% Výpis pole
 vypis_p :-
     s([0, 0], H00), s([0, 1], H01), s([0, 2], H02), s([0, 3], H03), s([0, 4], H04), s([0, 5], H05), s([0, 6], H06), s([0, 7], H07), s([0, 8], H08), s([0, 9], H09),
     s([1, 0], H10), s([1, 1], H11), s([1, 2], H12), s([1, 3], H13), s([1, 4], H14), s([1, 5], H15), s([1, 6], H16), s([1, 7], H17), s([1, 8], H18), s([1, 9], H19),
@@ -277,6 +538,7 @@ vypis_p :-
     write('   --- --- --- --- --- --- --- --- --- ---'), nl,
     write('    0   1   2   3   4   5   6   7   8   9 '), nl.
 
+% Definice pole - vygenerováno Python skriptem
 s([4, 4], ' ').
 s([4, 5], ' ').
 s([3, 5], ' ').
@@ -377,4 +639,5 @@ s([8, 9], ' ').
 s([7, 9], ' ').
 s([6, 9], ' ').
 s([5, 9], ' ').
+
 
