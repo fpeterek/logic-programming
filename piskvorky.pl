@@ -277,7 +277,7 @@ tp :-
     s(S6, ' '), o(S6, S7, S2, S8, S9),
     s(S7, o), s(S8, o), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
-    write([S3, 2]), nl,
+    write([S3, 3]), nl,
     vypis_p,
     test_v(x).
 
@@ -288,11 +288,14 @@ tp :-
     s(S6, ' '), o(S6, S7, S4, S8, S9),
     s(S7, o), s(S8, o), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
-    write([S3, 2]), nl,
+    write([S3, 3]), nl,
     vypis_p,
     test_v(x).
 
-% Obrana není dále potřeba (asi)
+% Je třeba bránit se proti paralelním trojicím
+% __**__ % Nějak takto to má vypadat
+% ______ % Nějak takto to má vypadat
+% __**__ % Nějak takto to má vypadat
 
 % Robíme kříže - položení čtvrtého pole, pravidlo 10
 
@@ -300,7 +303,7 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, x), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
     s(S7, x), s(S8, x), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 10]), nl,
@@ -310,7 +313,7 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
     s(S7, x), s(S8, x), s(S9, ' '),
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 10]), nl,
@@ -319,50 +322,8 @@ tp :-
 
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
-    s(S7, x), s(S8, x), s(S9, ' '),
-    retract(s(S3, ' ')), assert(s(S3, x)),
-    write([S3, 10]), nl,
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
-    s(S7, x), s(S8, x), s(S9, ' '),
-    retract(s(S2, ' ')), assert(s(S2, x)),
-    write([S2, 10]), nl,
-    vypis_p,
-    test_v(x).
-
-% To samé, ale kříž doleva
-
-tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
-    s(S7, x), s(S8, x), s(S9, ' '),
-    retract(s(S3, ' ')), assert(s(S3, x)),
-    write([S3, 10]), nl,
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
-    s(S7, x), s(S8, x), s(S9, ' '),
-    retract(s(S2, ' ')), assert(s(S2, x)),
-    write([S2, 10]), nl,
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
     s(S7, ' '), s(S8, x), s(S9, ' '),
     retract(s(S7, ' ')), assert(s(S7, x)),
     write([S7, 10]), nl,
@@ -372,7 +333,49 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
+    s(S7, x), s(S8, ' '), s(S9, ' '),
+    retract(s(S8, ' ')), assert(s(S8, x)),
+    write([S8, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+% To samé, ale kříž doleva
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S7 \= S3,
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S7 \= S3,
+    s(S7, x), s(S8, x), s(S9, ' '),
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S7 \= S3,
+    s(S7, ' '), s(S8, x), s(S9, ' '),
+    retract(s(S7, ' ')), assert(s(S7, x)),
+    write([S7, 10]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S7 \= S3,
     s(S7, x), s(S8, ' '), s(S9, ' '),
     retract(s(S8, ' ')), assert(s(S8, x)),
     write([S8, 10]), nl,
@@ -383,7 +386,7 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
     s(S7, ' '), s(S8, ' '), s(S9, ' '),
     retract(s(S8, ' ')), assert(s(S8, x)),
     write([S8, 11]), nl,
@@ -393,7 +396,7 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
     s(S7, ' '), s(S8, ' '), s(S9, ' '),
     retract(s(S8, ' ')), assert(s(S8, x)),
     write([S8, 11]), nl,
@@ -403,7 +406,7 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S2, S8, S9),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
     s(S7, x), s(S8, x), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 11]), nl,
@@ -413,7 +416,7 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
     s(S7, x), s(S8, x), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 11]), nl,
@@ -421,7 +424,71 @@ tp :-
     test_v(x).
 
 % Robíme kříže - položení druhého pole, pravidlo 12
-% TODO: Continue
+
+% Doprava
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 12]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, ' '), s(S4, x), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 12]), nl,
+    vypis_p,
+    test_v(x).
+
+% Doleva
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 12]), nl,
+    vypis_p,
+    test_v(x).
+
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 12]), nl,
+    vypis_p,
+    test_v(x).
+
+% Robíme kříže - položení prvního pole, pravidlo 13
+% Doprava
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S2, S8, S9), S8 \= S3,
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 13]), nl,
+    vypis_p,
+    test_v(x).
+
+% Doleva
+tp :-
+    s(S1, ' '), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
+    s(S6, ' '), o(S6, S7, S4, S8, S9), S8 \= S5,
+    s(S7, ' '), s(S8, ' '), s(S9, ' '),
+    retract(s(S3, ' ')), assert(s(S3, x)),
+    write([S3, 13]), nl,
+    vypis_p,
+    test_v(x).
 
 % Tah na volné pole, x - počítač, o - hráč
 tp :-
