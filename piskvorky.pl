@@ -323,7 +323,7 @@ tp :-
 
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, x), s(S3, ' '), s(S4, x),
+    s(S2, x), s(S3, ' '), s(S4, x), s(S5, ' '),
 
     s(S6, _), o(S6, S7, S8, S9, _),
     (s(S7, x); s(S9, x)), s(S8, x),
@@ -630,10 +630,10 @@ tp :-
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     (s(S2, ' '); s(S2, x)), s(S3, ' '), (s(S4, ' '); s(S4, x)), s(S5, ' '),
-    (s(S2, x); s(S4, x))
+    (s(S2, x); s(S4, x)),
 
     s(S6, _), o(S6, S7, S8, S9, _),
-    s(S8, ' '), ((s(S9, x), s(S4, x); (s(S7, x), s(S2, x)),
+    s(S8, ' '), ( (s(S9, x), s(S4, x)); (s(S7, x), s(S2, x)) ),
 
     [S1X, S1Y] = S1, [S6X, S6Y] = S6,
     (
@@ -650,8 +650,10 @@ tp :-
     (
         (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 16]), nl)
     ),
+
     vypis_p,
     test_v(x).
+
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
@@ -875,8 +877,8 @@ tp :-
         (s(S7, ' '), s(S8, x));
         (s(S7, x), s(S8, ' '));
         (s(S8, x), s(S9, ' '));
-        (s(S8, ' '), s(S9, x));
-    )
+        (s(S8, ' '), s(S9, x))
+    ),
 
     [S1X, S1Y] = S1, [S6X, S6Y] = S6,
     (
@@ -891,14 +893,14 @@ tp :-
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 17]), nl);
+        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 17]), nl)
     ),
     vypis_p,
     test_v(x).
 
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
-    (s(S2, ' '); s(S2, x)), (s(S3, ' ') s(S3, x)), (s(S4, ' '), s(S4, x)), s(S5, ' '),
+    (s(S2, ' '); s(S2, x)), (s(S3, ' '), s(S3, x)), (s(S4, ' '), s(S4, x)), s(S5, ' '),
     (s(S2, x); s(S3, x); s(S4, x)),
 
     s(S6, _), o(S6, S7, S8, S9, _),
@@ -907,7 +909,7 @@ tp :-
         (s(S2, x), s(S7, ' ')),
         (s(S3, x), (s(S7, ' '); s(S9, ' '))),
         (s(S4, x), s(S9, ' '))
-    )
+    ),
 
     [S1X, S1Y] = S1, [S6X, S6Y] = S6,
     (
@@ -922,7 +924,7 @@ tp :-
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 17]), nl);
+        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 17]), nl)
     ),
     vypis_p,
     test_v(x).
@@ -990,7 +992,7 @@ tp :-
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 18]), nl);
+        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 18]), nl)
     ),
     vypis_p,
     test_v(x).
