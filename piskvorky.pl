@@ -2,6 +2,8 @@
 
 reset :- retract(s(_, _)), fail.
 
+% Pětice xxxxx
+
 % Offense xxxxx
 
 %Tah počítače : pravidlo 1 Xxxxx
@@ -106,6 +108,8 @@ tp :-
     vypis_p,
     test_v(x).
 
+% Čtveřice
+
 % Offense xxxx
 
 %Tah počítače : pravidlo 4 Xxxx
@@ -116,7 +120,7 @@ tp :-
     s(S2, ' '), s(S3, x), s(S4, x), s(S5, x),
     (s(S6, ' '); s(S6, x)),
     retract(s(S2, ' ')), assert(s(S2, x)),
-    write([S2, 1]), nl,
+    write([S2, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -127,7 +131,7 @@ tp :-
     s(S2, x), s(S3, ' '), s(S4, x), s(S5, x),
     (s(S6, ' '); s(S6, x)),
     retract(s(S3, ' ')), assert(s(S3, x)),
-    write([S3, 1]), nl,
+    write([S3, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -138,7 +142,7 @@ tp :-
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, x),
     (s(S6, x); s(S6, ' ')),
     retract(s(S4, ' ')), assert(s(S4, x)),
-    write([S4, 1]), nl,
+    write([S4, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -149,7 +153,7 @@ tp :-
     s(S2, x), s(S3, x), s(S4, x), s(S5, ' '), 
     (s(S6, x); s(S6, ' ')),
     retract(s(S5, ' ')), assert(s(S5, x)),
-    write([S5, 1]), nl,
+    write([S5, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -163,7 +167,7 @@ tp :-
     s(S2, ' '), s(S3, o), s(S4, o), s(S5, o),
     (s(S6, ' '); s(S6, o)),
     retract(s(S2, ' ')), assert(s(S2, x)),
-    write([S2, 1]), nl,
+    write([S2, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -174,7 +178,7 @@ tp :-
     s(S2, o), s(S3, ' '), s(S4, o), s(S5, o),
     (s(S6, ' '); s(S6, o)),
     retract(s(S3, ' ')), assert(s(S3, x)),
-    write([S3, 1]), nl,
+    write([S3, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -185,7 +189,7 @@ tp :-
     s(S2, o), s(S3, o), s(S4, ' '), s(S5, o),
     (s(S6, o); s(S6, ' ')),
     retract(s(S4, ' ')), assert(s(S4, x)),
-    write([S4, 1]), nl,
+    write([S4, 4]), nl,
     vypis_p,
     test_v(x).
 
@@ -196,9 +200,12 @@ tp :-
     s(S2, o), s(S3, o), s(S4, o), s(S5, ' '), 
     (s(S6, o); s(S6, ' ')),
     retract(s(S5, ' ')), assert(s(S5, x)),
-    write([S5, 1]), nl,
+    write([S5, 4]), nl,
     vypis_p,
     test_v(x).
+
+
+% Kříže
 
 % Offense - kříž
 
@@ -306,7 +313,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -332,7 +340,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -341,7 +350,7 @@ tp :-
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 13]), nl)
+        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 14]), nl)
     ),
     vypis_p,
     test_v(x).
@@ -359,7 +368,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -386,7 +396,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -411,7 +421,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -436,7 +446,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -461,7 +471,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -486,7 +496,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -511,7 +521,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -536,7 +546,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -561,7 +571,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -588,7 +598,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -613,7 +624,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -639,7 +651,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -665,7 +678,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -691,7 +705,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -716,7 +731,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -742,7 +758,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -767,7 +784,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -780,6 +798,7 @@ tp :-
     ),
     vypis_p,
     test_v(x).
+
 
 % Robíme kříže - položení čtvrtého pole, pravidlo 10
 
@@ -884,7 +903,8 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -915,7 +935,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -983,7 +1003,7 @@ tp :-
     (
         (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
         (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        ((S1X is S6X+2; S1X is S6X-2), (S1Y is S6Y+2; S1Y is S6Y-2))
+        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
     ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -1073,6 +1093,7 @@ tp :-
     test_v(x).
 
 % Tah hráče
+tah(X, Y) :- tah([X, Y]).
 tah(S) :-
     s(S, ' '),
     retract(s(S, ' ')), assert(s(S, o)),
