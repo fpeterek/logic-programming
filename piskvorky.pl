@@ -1,6 +1,22 @@
-:- dynamic s/2 .
+:- dynamic s/2.
+:- dynamic is_empty_flag/1.
 
 reset :- retract(s(_, _)), fail.
+
+% Tah na prostřední pole, pokud je celé herní pole prázdné
+is_empty_flag(true).
+
+is_empty(V) :-
+    is_empty_flag(V),
+    V,
+    findall(Coord, s(Coord, ' '), Empty),
+    length(Empty, 100),
+    retract(is_empty_flag(true)),
+    assert(is_empty_flag(false)).
+
+is_empty(false).
+
+tp :- is_empty(V), V, s(S, ' '), retract(s(S, ' ')), assert(s(S, x)), vypis_p, test_v(x).
 
 % Pětice xxxxx
 
@@ -257,10 +273,10 @@ tp :-
 
 %Tah počítače : pravidlo 3 kříž
 tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S3, ' '), s(S4, o), s(S5, ' '),
-    s(S6, ' '), S1 \= S6, o(S6, S7, S3, S8, S9),
-    s(S7, o), s(S8, o), s(S9, ' '),
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S2, o), s(S3, ' '), s(S4, o), (s(S5, ' '); s(S5, o)),
+    (s(S6, ' '); s(S6, o)), S1 \= S6, o(S6, S7, S3, S8, S9),
+    s(S7, o), s(S8, o), (s(S9, ' '); s(S9, o)),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 3]), nl,
     vypis_p,
@@ -268,10 +284,10 @@ tp :-
 
 %Tah počítače : pravidlo 3 kříž
 tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S3, o), s(S4, o), s(S5, ' '),
-    s(S6, ' '), S1 \= S6, o(S6, S2, S7, S8, S9),
-    s(S7, o), s(S8, o), s(S9, ' '),
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, o), s(S4, o), (s(S5, ' '); s(S5, o)),
+    (s(S6, ' '); s(S6, o)), S1 \= S6, o(S6, S2, S7, S8, S9),
+    s(S7, o), s(S8, o), (s(S9, ' '); s(S9, o)),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 3]), nl,
     vypis_p,
@@ -279,10 +295,10 @@ tp :-
 
 %Tah počítače - pravidlo 3 kříž ukazující doprava
 tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S3, o), s(S4, o), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S2, S8, S9),
-    s(S7, o), s(S8, o), s(S9, ' '),
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S2, ' '), s(S3, o), s(S4, o), (s(S5, ' '); s(S5, o)),
+    (s(S6, ' '); s(S6, o)), o(S6, S7, S2, S8, S9),
+    s(S7, o), s(S8, o), (s(S9, ' '); s(S9, o)),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 3]), nl,
     vypis_p,
@@ -290,10 +306,10 @@ tp :-
 
 %Tah počítače - pravidlo 3 kříž ukazující doleva
 tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    s(S2, o), s(S3, o), s(S4, ' '), s(S5, ' '),
-    s(S6, ' '), o(S6, S7, S4, S8, S9),
-    s(S7, o), s(S8, o), s(S9, ' '),
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S2, o), s(S3, o), s(S4, ' '), (s(S5, ' '); s(S5, o)),
+    (s(S6, ' '); s(S6, o)), o(S6, S7, S4, S8, S9),
+    s(S7, o), s(S8, o), (s(S9, ' '); s(S9, o)),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 3]), nl,
     vypis_p,
@@ -355,7 +371,8 @@ tp :-
     vypis_p,
     test_v(x).
 
-% Obrana před paralelníma dvojicema/trojicema/jak tomu chcu říkat
+% Obrana před paralelníma dvojicema/trojicema/jak tomu chcu říkat - pro dvě
+% paralelní dvojice, ale to už je trochu pozdě
 tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     (s(S2, o); s(S4, o)),
@@ -581,6 +598,47 @@ tp :-
 
     (
         (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 15]), nl)
+    ),
+    vypis_p,
+    test_v(x).
+
+% Obrana před paralelními dvojicemi/trojicemi, pravidlo 20 - je třeba provést, dokud
+% soupeř položil pouze tři pole, jinak je pozdě
+% TODO: Perf issues
+
+tp :-
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S3, o),
+    (s(S2, ' '); s(S2, o)), (s(S4, ' '); s(S4, o)), (s(S5, ' '); s(S5, o)),
+
+    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
+    (
+        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
+        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
+        (S1X is S6X+2, S1Y is S6Y+2);
+        (S1X is S6X-2, S1Y is S6Y-2)
+    ),
+
+    s(S6, _), o(S6, S7, S8, S9, _),
+    (s(S7, ' '); s(S7, o)), (s(S8, ' '); s(S8, o)), (s(S9, ' '); s(S9, o)),
+
+    (
+        (s(S2, o), s(S7, o)); 
+        (s(S4, o), s(S9, o))
+    ),
+
+    (s(SB, ' '); s(SB, o)), o(SB, SC, SD, SE, SF),
+    SB \= S1, SB \= S6,
+    (SC = S2; SC = S7), (SE = S4; SE = S9),
+    (s(SD, ' '); s(SD, o)), (s(SF, ' '); s(SF, o)),
+
+    s(ST, _), s(SU, _), s(SV, _), s(SW, _),
+    (o(ST, S7, S27, S2, _); o(SU, S2, S27, S7, _)),
+    (o(SV, S4, S49, S9, _); o(SW, S9, S49, S4, _)),
+
+    (
+        (s(S2, o), s(S27, ' '), retract(s(S27, ' ')), assert(s(S27, x)), write([S27, 20]), nl);
+        (s(S4, o), s(S49, ' '), retract(s(S49, ' ')), assert(s(S49, x)), write([S49, 20]), nl)
     ),
     vypis_p,
     test_v(x).
