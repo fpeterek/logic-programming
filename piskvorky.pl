@@ -322,16 +322,15 @@ tp :-
     (s(S2, x); s(S4, x)),
     (s(S2, ' '); s(S2, x)), s(S3, x), (s(S4, x); s(S4, ' ')), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     (s(S7, x); s(S9, x)), s(S8, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -349,16 +348,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, ' '), s(S4, x), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     (s(S7, x); s(S9, x)), s(S8, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -378,16 +376,15 @@ tp :-
     (s(S2, o); s(S4, o)),
     (s(S2, ' '); s(S2, o)), s(S3, o), (s(S4, o); s(S4, ' ')), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     (s(S7, o); s(S9, o)), s(S8, o),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -406,15 +403,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, x), s(S8, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -431,15 +428,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, x), s(S8, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -456,15 +453,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, x), s(S9, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -481,15 +478,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, x), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, x), s(S9, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -506,15 +503,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, ' '), s(S8, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -531,15 +528,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, x), s(S8, ' '),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -556,15 +553,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, x), s(S9, ' '),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -581,15 +578,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, ' '), s(S9, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -604,20 +601,18 @@ tp :-
 
 % Obrana před paralelními dvojicemi/trojicemi, pravidlo 20 - je třeba provést, dokud
 % soupeř položil pouze tři pole, jinak je pozdě
-% TODO: Perf issues
 
 tp :-
     (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
     s(S3, o),
     (s(S2, ' '); s(S2, o)), (s(S4, ' '); s(S4, o)), (s(S5, ' '); s(S5, o)),
 
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
     (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ), 
+    S6 = [S6X, S6Y],
 
     s(S6, _), o(S6, S7, S8, S9, _),
     (s(S7, ' '); s(S7, o)), (s(S8, ' '); s(S8, o)), (s(S9, ' '); s(S9, o)),
@@ -649,16 +644,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, x), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, ' '), s(S9, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -675,16 +669,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, ' '), (s(S9, x); s(S7, x)),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -702,16 +695,15 @@ tp :-
     (s(S2, ' '); s(S2, x)), s(S3, ' '), (s(S4, ' '); s(S4, x)), s(S5, ' '),
     (s(S2, x); s(S4, x)),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, ' '), ( (s(S9, x), s(S4, x)); (s(S7, x), s(S2, x)) ),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -729,16 +721,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, ' '), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, x), s(S8, ' '),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -756,16 +747,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, ' '), s(S8, ' '),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -782,16 +772,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, x), s(S4, x), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, ' '), s(S9, ' '),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -809,16 +798,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, x), s(S9, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -835,16 +823,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, x), s(S8, x),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -949,6 +936,13 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y), [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     (
         (s(S7, ' '), s(S8, x));
@@ -957,21 +951,13 @@ tp :-
         (s(S8, ' '), s(S9, x))
     ),
 
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2);
-        (S1X is S6X-2, S1Y is S6Y-2)
-    ),
-
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
     (SC = S2; SC = S7), (SE = S4; SE = S9),
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 17]), nl)
+        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 17.1]), nl)
     ),
     vypis_p,
     test_v(x).
@@ -981,6 +967,13 @@ tp :-
     (s(S2, ' '); s(S2, x)), (s(S3, ' '), s(S3, x)), (s(S4, ' '), s(S4, x)), s(S5, ' '),
     (s(S2, x); s(S3, x); s(S4, x)),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S8, ' '),
     (
@@ -989,20 +982,13 @@ tp :-
         (s(S4, x), s(S9, ' '))
     ),
 
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
-
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
     (SC = S2; SC = S7), (SE = S4; SE = S9),
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 17]), nl)
+        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 17.2]), nl)
     ),
     vypis_p,
     test_v(x).
@@ -1054,15 +1040,15 @@ tp :-
     s(S1, ' '), o(S1, S2, S3, S4, S5),
     s(S2, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
 
+    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
+    (
+        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
+        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+    ),
+    S6 = [S6X, S6Y],
+
     s(S6, _), o(S6, S7, S8, S9, _),
     s(S7, ' '), (s(S6, ' '); s(S8, ' ')),
-
-    [S1X, S1Y] = S1, [S6X, S6Y] = S6,
-    (
-        (S1X = S6X, (S1Y is S6Y+2; S1Y is S6Y-2));
-        (S1Y = S6Y, (S1X is S6X+2; S1X is S6X-2));
-        (S1X is S6X+2, S1Y is S6Y+2); (S1X is S6X-2, S1Y is S6Y-2)
-    ),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
     SB \= S1, SB \= S6,
@@ -1157,6 +1143,7 @@ tah(S) :-
     retract(s(S, ' ')), assert(s(S, o)),
     vypis_p,
     test_v(o),
+    % true.
     tp.
 
 % Objekty - 5 polí
