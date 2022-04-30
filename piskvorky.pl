@@ -220,10 +220,222 @@ tp :-
     vypis_p,
     test_v(x).
 
-
 % Kříže
 
 % Offense - kříž
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - nahoru doleva
+% TODO: Nefunguje úplně asi
+
+% Útok
+
+tp :-
+    (s(S1, ' '); s(S1, x)), o(S1, S2, S3, S4, S5),
+    s(S4, ' '),
+    (
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
+    ),
+    (s(S5, x); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, x)),
+    o6(S6, S7, S8, S9, S4, SA),
+    S7 \= S1,
+    
+    (s(S7, ' '); s(S7, x)),
+    (s(S8, ' '); s(S8, x)),
+    (s(S9, ' '); s(S9, x)),
+    (s(SA, ' '); s(SA, x)),
+    s(S9, ' '),
+    (
+        (s(S7, x), s(S8, x));
+        (s(S8, x), s(SA, x))
+    ),
+
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - dolů doleva
+
+tp :-
+    (s(S1, ' '); s(S1, x)), o(S1, S2, S3, S4, S5),
+    s(S2, ' '),
+    (
+        (s(S1, x), s(S3, x)); 
+        (s(S3, x), s(S4, x))
+    ),
+    (s(S5, x); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, x)),
+    o6(S6, S7, S8, S9, S2, SA),
+    S9 \= S1,
+    
+    (s(S7, ' '); s(S7, x)),
+    (s(S8, ' '); s(S8, x)),
+    (s(S9, ' '); s(S9, x)),
+    (s(SA, ' '); s(SA, x)),
+    s(S9, ' '),
+    (
+        (s(S7, x), s(S8, x));
+        (s(S8, x), s(SA, x))
+    ),
+
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - nahoru doprava
+
+tp :-
+    (s(S1, ' '); s(S1, x)), o(S1, S2, S3, S4, S5),
+    s(S4, ' '),
+    (
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
+    ),
+    (s(S5, x); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, x)),
+    o6(S6, S4, S7, S8, S9, SA),
+    S7 \= S5,
+    
+    (s(S7, ' '); s(S7, x)),
+    (s(S8, ' '); s(S8, x)),
+    (s(S9, ' '); s(S9, x)),
+    (s(SA, ' '); s(SA, x)),
+    s(S9, ' '),
+    (
+        (s(S6, x), s(S8, x));
+        (s(S8, x), s(S9, x))
+    ),
+
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Obrana
+
+tp :-
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S4, ' '),
+    (
+        (s(S2, o), s(S3, o)); 
+        (s(S3, o), s(S5, o))
+    ),
+    (s(S5, o); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, o)),
+    o6(S6, S7, S8, S9, S4, SA),
+    S7 \= S1,
+    
+    (s(S7, ' '); s(S7, o)),
+    (s(S8, ' '); s(S8, o)),
+    (s(S9, ' '); s(S9, o)),
+    (s(SA, ' '); s(SA, o)),
+    s(S9, ' '),
+    (
+        (s(S7, o), s(S8, o));
+        (s(S8, o), s(SA, o))
+    ),
+
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - dolů doleva
+
+tp :-
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S2, ' '),
+    (
+        (s(S1, o), s(S3, o)); 
+        (s(S3, o), s(S4, o))
+    ),
+    (s(S5, o); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, o)),
+    o6(S6, S7, S8, S9, S2, SA),
+    S9 \= S1,
+    
+    (s(S7, ' '); s(S7, o)),
+    (s(S8, ' '); s(S8, o)),
+    (s(S9, ' '); s(S9, o)),
+    (s(SA, ' '); s(SA, o)),
+    s(S9, ' '),
+    (
+        (s(S7, o), s(S8, o));
+        (s(S8, o), s(SA, o))
+    ),
+
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - nahoru doprava
+
+tp :-
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S4, ' '),
+    (
+        (s(S2, o), s(S3, o)); 
+        (s(S3, o), s(S5, o))
+    ),
+    (s(S5, o); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, o)),
+    o6(S6, S4, S7, S8, S9, SA),
+    S7 \= S5,
+    
+    (s(S7, ' '); s(S7, o)),
+    (s(S8, ' '); s(S8, o)),
+    (s(S9, ' '); s(S9, o)),
+    (s(SA, ' '); s(SA, o)),
+    s(S9, ' '),
+    (
+        (s(S6, o), s(S8, o));
+        (s(S8, o), s(S9, o))
+    ),
+
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - dolů doprava
+
+tp :-
+    (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
+    s(S2, ' '),
+    (
+        (s(S1, o), s(S3, o));
+        (s(S3, o), s(S4, o)) 
+    ),
+    (s(S5, o); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, o)),
+    o6(S6, S2, S7, S8, S9, SA),
+    S6 \= S1,
+    
+    (s(S7, ' '); s(S7, o)),
+    (s(S8, ' '); s(S8, o)),
+    (s(S9, ' '); s(S9, o)),
+    (s(SA, ' '); s(SA, o)),
+    s(S9, ' '),
+    (
+        (s(S6, o), s(S8, o));
+        (s(S8, o), s(S9, o))
+    ),
+
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 30]), nl,
+    vypis_p,
+    test_v(x).
 
 %Tah počítače - pravidlo 2 kříž
 tp :-
@@ -601,6 +813,7 @@ tp :-
 
 % Obrana před paralelními dvojicemi/trojicemi, pravidlo 20 - je třeba provést, dokud
 % soupeř položil pouze tři pole, jinak je pozdě
+% TODO: Perf issues
 
 tp :-
     (s(S1, ' '); s(S1, o)), o(S1, S2, S3, S4, S5),
@@ -845,6 +1058,97 @@ tp :-
     test_v(x).
 
 
+% Robíme zákeřné kříže - položení čtvrtého pole, pravidlo 31
+
+% Útok
+
+tp :-
+    (s(S1, ' '); s(S1, x)), o(S1, S2, S3, S4, S5),
+    s(S4, ' '),
+    (
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
+    ),
+    (s(S5, x); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, x)),
+    o6(S6, S7, S8, S9, S4, SA),
+    S7 \= S1,
+    
+    (s(S7, ' '); s(S7, x)),
+    (s(S8, ' '); s(S8, x)),
+    (s(S9, ' '); s(S9, x)),
+    (s(SA, ' '); s(SA, x)),
+    s(S9, ' '),
+    (
+        (s(S7, x), s(S8, x));
+        (s(S8, x), s(SA, x))
+    ),
+
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - dolů doleva
+
+tp :-
+    (s(S1, ' '); s(S1, x)), o(S1, S2, S3, S4, S5),
+    s(S2, ' '),
+    (
+        (s(S1, x), s(S3, x)); 
+        (s(S3, x), s(S4, x))
+    ),
+    (s(S5, x); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, x)),
+    o6(S6, S7, S8, S9, S2, SA),
+    S9 \= S1,
+    
+    (s(S7, ' '); s(S7, x)),
+    (s(S8, ' '); s(S8, x)),
+    (s(S9, ' '); s(S9, x)),
+    (s(SA, ' '); s(SA, x)),
+    s(S9, ' '),
+    (
+        (s(S7, x), s(S8, x));
+        (s(S8, x), s(SA, x))
+    ),
+
+    retract(s(S2, ' ')), assert(s(S2, x)),
+    write([S2, 30]), nl,
+    vypis_p,
+    test_v(x).
+
+% Tah počítače - pravidlo 30 - zákeřnější kříž - nahoru doprava
+
+tp :-
+    (s(S1, ' '); s(S1, x)), o(S1, S2, S3, S4, S5),
+    s(S4, ' '),
+    (
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
+    ),
+    (s(S5, x); s(S5, ' ')),
+
+    (s(S6, ' '); s(S6, x)),
+    o6(S6, S4, S7, S8, S9, SA),
+    S7 \= S5,
+    
+    (s(S7, ' '); s(S7, x)),
+    (s(S8, ' '); s(S8, x)),
+    (s(S9, ' '); s(S9, x)),
+    (s(SA, ' '); s(SA, x)),
+    s(S9, ' '),
+    (
+        (s(S6, x), s(S8, x));
+        (s(S8, x), s(S9, x))
+    ),
+
+    retract(s(S4, ' ')), assert(s(S4, x)),
+    write([S4, 30]), nl,
+    vypis_p,
+    test_v(x).
 % Robíme kříže - položení čtvrtého pole, pravidlo 10
 
 % Kříž doprava
@@ -1143,8 +1447,8 @@ tah(S) :-
     retract(s(S, ' ')), assert(s(S, o)),
     vypis_p,
     test_v(o),
-    % true.
-    tp.
+    true.
+    % tp.
 
 % Objekty - 5 polí
 o([X, Y], [X1, Y], [X2, Y], [X3, Y], [X4, Y]) :-
