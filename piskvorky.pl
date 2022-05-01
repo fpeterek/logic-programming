@@ -131,10 +131,10 @@ tp :-
 %Tah počítače : pravidlo 4 Xxxx
 %Předpoklad - oponent není debil a umí blokovat trojice/čtveřice - tedy čtveřici je třeba tvořit pouze pokud je trojice volná z obou stran.
 tp :-
-    (s(S1, ' '); s(S1, x)),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, ' '), s(S3, x), s(S4, x), s(S5, x),
-    (s(S6, ' '); s(S6, x)),
+    s(S6, ' '),
     retract(s(S2, ' ')), assert(s(S2, x)),
     write([S2, 4]), nl,
     vypis_p,
@@ -142,10 +142,10 @@ tp :-
 
 %Tah počítače : pravidlo 4 xXxx
 tp :-
-    (s(S1, ' '), s(S1, x)),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, x), s(S3, ' '), s(S4, x), s(S5, x),
-    (s(S6, ' '); s(S6, x)),
+    s(S6, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 4]), nl,
     vypis_p,
@@ -153,10 +153,10 @@ tp :-
 
 %Tah počítače : pravidlo 4 xxXx
 tp :-
-    (s(S1, x); s(S1, ' ')),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, x), s(S3, x), s(S4, ' '), s(S5, x),
-    (s(S6, x); s(S6, ' ')),
+    s(S6, ' '),
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 4]), nl,
     vypis_p,
@@ -164,10 +164,10 @@ tp :-
 
 %Tah počítače : pravidlo 4 xxxX
 tp :-
-    (s(S1, ' '); s(S1, x)),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, x), s(S3, x), s(S4, x), s(S5, ' '), 
-    (s(S6, x); s(S6, ' ')),
+    s(S6, ' '),
     retract(s(S5, ' ')), assert(s(S5, x)),
     write([S5, 4]), nl,
     vypis_p,
@@ -178,7 +178,7 @@ tp :-
 %Tah počítače : pravidlo 4 Xxxx
 %Předpoklad - oponent není debil a umí blokovat trojice/čtveřice - tedy čtveřici je třeba tvořit pouze pokud je trojice volná z obou stran.
 tp :-
-    (s(S1, ' '); s(S1, o)),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, ' '), s(S3, o), s(S4, o), s(S5, o),
     (s(S6, ' '); s(S6, o)),
@@ -189,10 +189,10 @@ tp :-
 
 %Tah počítače : pravidlo 4 xXxx
 tp :-
-    (s(S1, ' '), s(S1, o)),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, o), s(S3, ' '), s(S4, o), s(S5, o),
-    (s(S6, ' '); s(S6, o)),
+    s(S6, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 4]), nl,
     vypis_p,
@@ -200,10 +200,10 @@ tp :-
 
 %Tah počítače : pravidlo 4 xxXx
 tp :-
-    (s(S1, o); s(S1, ' ')),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, o), s(S3, o), s(S4, ' '), s(S5, o),
-    (s(S6, o); s(S6, ' ')),
+    s(S6, ' '),
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 4]), nl,
     vypis_p,
@@ -211,10 +211,10 @@ tp :-
 
 %Tah počítače : pravidlo 4 xxxX
 tp :-
-    (s(S1, ' '); s(S1, o)),
+    s(S1, ' '),
     o6(S1, S2, S3, S4, S5, S6),
     s(S2, o), s(S3, o), s(S4, o), s(S5, ' '), 
-    (s(S6, o); s(S6, ' ')),
+    s(S6, ' '),
     retract(s(S5, ' ')), assert(s(S5, x)),
     write([S5, 4]), nl,
     vypis_p,
@@ -720,18 +720,24 @@ tp :-
 
 tp :-
     s(S3, x), o3(S1, S2, S3, S4, S5),
+    s(S1, ' '), s(S5, ' '),
     (s(S2, x); s(S4, x)),
-    (s(S2, ' '); s(S2, x)), s(S1, ' '), (s(S4, x); s(S4, ' ')), s(S5, ' '),
+    (s(S2, ' '); s(S2, x)), (s(S4, x); s(S4, ' ')),
 
     [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
     (
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
     s(S8, x),
-    o3(S6, S7, S8, S9, _),
+    o3(S6, S7, S8, S9, SA),
     (s(S7, x); s(S9, x)),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -755,10 +761,15 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
     s(S8, x), 
-    o3(S6, S7, S8, S9, _),
+    o3(S6, S7, S8, S9, SA),
     (s(S7, x); s(S9, x)),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -773,9 +784,9 @@ tp :-
     test_v(x).
 
 % Obrana před paralelníma dvojicema/trojicema/jak tomu chcu říkat - pro dvě
-% paralelní dvojice, ale to už je trochu pozdě
+% paralelní dvojice, ale to už je trochu pozdě - pravidlo 60
 tp :-
-    s(S1, o), o(S1, S2, S3, S4, S5),
+    s(S3, o), o3(S1, S2, S3, S4, S5),
     (s(S2, o); s(S4, o)),
     (s(S2, ' '); s(S2, o)), s(S1, ' '), (s(S4, o); s(S4, ' ')), s(S5, ' '),
 
@@ -784,9 +795,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, o), o3(S6, S7, S8, S9, _),
+    s(S8, o), o3(S6, S7, S8, S9, SA),
     (s(S7, o); s(S9, o)), s(S8, o),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -795,7 +811,7 @@ tp :-
     s(SB, ' '), s(SD, ' '), s(SF, ' '),
 
     (
-        (retract(s(SD, ' ')), assert(s(SD, x)), write([SD, 14]), nl)
+        (retract(s(SD, ' ')), assert(s(SD, x)), write([SD, 60]), nl)
     ),
     vypis_p,
     test_v(x).
@@ -811,9 +827,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, x), o3(S6, S7, S8, S9, _),
+    s(S8, x), o3(S6, S7, S8, S9, SA),
     s(S7, x),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -836,9 +857,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, x), o3(S6, S7, S8, S9, _),
+    s(S8, x), o3(S6, S7, S8, S9, SA),
     s(S7, x),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -861,9 +887,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, x), o3(S6, S7, S8, S9, _),
+    s(S8, x), o3(S6, S7, S8, S9, SA),
     s(S9, x),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -886,9 +917,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, x), o3(S6, S7, S8, S9, _),
+    s(S8, x), o3(S6, S7, S8, S9, SA),
     s(S8, x), s(S9, x),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -911,9 +947,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, x), o3(S6, S7, S8, S9, _),
+    s(S8, x), o3(S6, S7, S8, S9, SA),
     s(S7, ' '), s(S8, x),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -936,9 +977,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S7, x), o2(S6, S7, S8, S9, _),
+    s(S7, x), o2(S6, S7, S8, S9, SA),
     s(S7, x), s(S8, ' '),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -961,9 +1007,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, x), o3(S6, S7, S8, S9, _),
+    s(S8, x), o3(S6, S7, S8, S9, SA),
     s(S8, x), s(S9, ' '),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -986,9 +1037,14 @@ tp :-
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
     ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S9, x), o4(S6, S7, S8, S9, _),
+    s(S9, x), o4(S6, S7, S8, S9, SA),
     s(S8, ' '), s(S9, x),
 
     s(SB, ' '), o(SB, SC, SD, SE, SF),
@@ -1004,8 +1060,6 @@ tp :-
 
 % Obrana před paralelními dvojicemi/trojicemi, pravidlo 20 - je třeba provést, dokud
 % soupeř položil pouze tři pole, jinak je pozdě
-
-
 tp :-
     s(S3, o),
     o3(S1, S2, S3, S4, S5),
@@ -1015,240 +1069,48 @@ tp :-
     (
         (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
         (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ), 
+    ),
+    (
+        (SAX = S5X, (SAY is S5Y-2; SAY is S5Y+2));
+        (SAY = S5Y, (SAX is S5X-2; SAX is S5X+2))
+    ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
+    o(S6, S7, S8, S9, SA),
+    S7 \= S2,
+    S8 \= S3,
     (s(S8, ' '); s(S8, o)),
-    o3(S6, S7, S8, S9, _),
     (s(S7, ' '); s(S7, o)),(s(S9, ' '); s(S9, o)),
+    % write(S1), write(S5), nl,
+    % write(S6), write(SA), nl,
+
+    s(SB, _),
 
     (
-        (s(S2, o), s(S7, o)); 
-        (s(S4, o), s(S9, o))
-    ),
-
-    (s(SB, ' '); s(SB, o)), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    (s(SD, ' '); s(SD, o)), (s(SF, ' '); s(SF, o)),
-
-    s(ST, _), s(SU, _), s(SV, _), s(SW, _),
-    (o(ST, S7, S27, S2, _); o(SU, S2, S27, S7, _)),
-    (o(SV, S4, S49, S9, _); o(SW, S9, S49, S4, _)),
-
-    (
-        (s(S2, o), s(S27, ' '), retract(s(S27, ' ')), assert(s(S27, x)), write([S27, 20]), nl);
-        (s(S4, o), s(S49, ' '), retract(s(S49, ' ')), assert(s(S49, x)), write([S49, 20]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-% Robíme paralelní trojice - položení třetího pole, pravidlo 16
-
-tp :-
-    s(S4, x), o4(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S3, ' '), s(S1, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, ' '), o3(S6, S7, S8, S9, _),
-    s(S8, ' '), s(S9, x),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 16.1]), nl)
+        (
+            (s(S2, o); s(S4, o)), s(S8, o), 
+            write('S3: '), write(S3), write(', S8: '), write(S8), nl,
+            (o(SB, S3, SC, S8, SE); o(SB, S8, SC, S3, SE)),
+            retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 20]), nl
+        );
+        (
+            s(S4, o), s(S9, o), 
+            write('S4: '), write(S4), write(', S9: '), write(S9), nl,
+            (o(SB, S4, SC, S9, SE); o(SB, S9, SC, S4, SE)),
+            write(bb),
+            retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 20]), nl
+        );
+        (
+            s(S2, o), s(S7, o), 
+            write('S2: '), write(S2), write(', S7: '), write(S7), nl,
+            (o(SB, S2, SC, S7, SE); o(SB, S7, SC, S2, SE)),
+            write(cc),
+            retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 20]), nl
+        )
     ),
     vypis_p,
     test_v(x).
-
-tp :-
-    s(S3, x), o3(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S1, ' '), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, ' '), o3(S6, S7, S8, S9, _),
-    s(S8, ' '), (s(S9, x); s(S7, x)),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 16.2]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S3, ' '), o3(S1, S2, S3, S4, S5),
-    (s(S2, ' '); s(S2, x)), s(S1, ' '), (s(S4, ' '); s(S4, x)), s(S5, ' '),
-    (s(S2, x); s(S4, x)),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, ' '), o3(S6, S7, S8, S9, _),
-    s(S8, ' '), ( (s(S9, x), s(S4, x)); (s(S7, x), s(S2, x)) ),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 16.3]), nl)
-    ),
-
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S2, x), o2(S1, S2, S3, S4, S5),
-    s(S1, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S7, x), o2(S6, S7, S8, S9, _),
-    s(S7, x), s(S8, ' '),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 16.4]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-% Nahoře x
-tp :-
-    s(S2, x), o2(S1, S2, S3, S4, S5),
-    s(S1, ' '), s(S3, x), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, ' '), o3(S6, S7, S8, S9, _),
-    s(S7, ' '), s(S8, ' '),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S7, ' ')), assert(s(S7, x)), write([S7, 16.5]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S3, x), o3(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S1, ' '), s(S4, x), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, ' '), o3(S6, S7, S8, S9, _),
-    s(S8, ' '), s(S9, ' '),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 16.6]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-% Dole x
-tp :-
-    s(S3, ' '), o3(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S1, ' '), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, x), o3(S6, S7, S8, S9, _),
-    s(S8, x), s(S9, x),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 16.7]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S3, ' '), o3(S1, S2, S3, S4, S5),
-    s(S2, ' '), s(S1, ' '), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S8, x), o3(S6, S7, S8, S9, _),
-    s(S7, x), s(S8, x),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 16.8]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
 
 % Robíme zákeřné kříže - položení čtvrtého pole, pravidlo 31
 
@@ -1291,11 +1153,11 @@ tp :-
         );
 
         (
-            s(S7, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (S8, x),
+            s(S7, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S8, x),
             retract(s(S7, ' ')), assert(s(S7, x)), write([S7, 31]), nl
         );
         (
-            s(S8, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (S7, x),
+            s(S8, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S7, x),
             retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 31]), nl
         )
     ),
@@ -1341,11 +1203,11 @@ tp :-
         );
 
         (
-            s(SA, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (S8, x),
+            s(SA, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S8, x),
             retract(s(SA, ' ')), assert(s(SA, x)), write([SA, 31]), nl
         );
         (
-            s(S8, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (SA, x),
+            s(S8, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SA, x),
             retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 31]), nl
         )
     ),
@@ -1392,11 +1254,11 @@ tp :-
         );
 
         (
-            s(SC, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (SB, x),
+            s(SC, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SB, x),
             retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 31]), nl
         );
         (
-            s(SB, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (SC, x),
+            s(SB, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SC, x),
             retract(s(SB, ' ')), assert(s(SB, x)), write([SB, 31]), nl
         )
     ),
@@ -1443,11 +1305,11 @@ tp :-
         );
 
         (
-            s(S9, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (SB, x),
+            s(S9, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SB, x),
             retract(s(S9, ' ')), assert(s(S9, x)), write([S9, 31]), nl
         );
         (
-            s(SB, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), (S9, x),
+            s(SB, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S9, x),
             retract(s(SB, ' ')), assert(s(SB, x)), write([SB, 31]), nl
         )
     ),
@@ -1456,30 +1318,54 @@ tp :-
     test_v(x).
 
 % Tah počítače - pravidlo 30 - zákeřnější kříž - nahoru z obou stran
-% TODO: jestli se mi bude chtít, už to můžu srát totiž
-/*
+
 tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        ((s(S2, x); s(S4, x)), (s(S1, x); s(S1, ' '))); 
+        ((s(S4, x); s(S5, x)), (s(SZ, x); s(SZ, ' ')))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
     (s(S4, x); s(S4, ' ')),
     (s(S5, x); s(S5, ' ')),
-    (s(SZ, x); s(SZ, ' ')),
 
     s(S6, _),
     o6(S6, S7, S8, S9, S4, SA),
     S9 \= S3,
     
     s(S9, ' '),
-    (s(S6, ' '); s(S6, x)), s(S7, x), s(S8, x), (s(SA, ' '); s(SA, x)),
+    ((s(S6, ' '); s(S6, x)), (s(S7, x); s(S7, ' ')), (s(S8, x); s(S8, ' ')), (s(SA, ' '); s(SA, x))),
+    (s(S7, x), s(S8, x)),
 
-    retract(s(S4, ' ')), assert(s(S4, x)),
-    write([S4, 30]), nl,
+    (
+        (
+            (s(S1, x); s(S1, ' ')), s(S2, ' '), s(S4, x), s(S7, x), s(S8, x),
+            retract(s(S2, ' ')), assert(s(S2, x)), write([S2, 31]), nl
+        );
+        (
+            (s(S1, x); s(S1, ' ')), s(S4, ' '), s(S2, x), s(S7, x), s(S8, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S5, ' '), s(S4, x), s(S7, x), s(S8, x),
+            retract(s(S5, ' ')), assert(s(S5, x)), write([S5, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S4, ' '), s(S5, x), s(S7, x), s(S8, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+
+        (
+            s(S7, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S8, x),
+            retract(s(S7, ' ')), assert(s(S7, x)), write([S7, 31]), nl
+        );
+        (
+            s(S8, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S7, x),
+            retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 31]), nl
+        )
+    ),
     vypis_p,
     test_v(x).
 
@@ -1487,24 +1373,50 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        ((s(S2, x); s(S4, x)), (s(S1, x); s(S1, ' '))); 
+        ((s(S4, x); s(S5, x)), (s(SZ, x); s(SZ, ' ')))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
     (s(S4, x); s(S4, ' ')),
     (s(S5, x); s(S5, ' ')),
-    (s(SZ, x); s(SZ, ' ')),
 
     s(S7, _),
     o6(S7, S8, S9, S4, SA, SB),
     S9 \= S3,
     
     s(S9, ' '),
-    (s(S7, x); s(S7, ' ')), s(S8, x), s(SA, x), (s(SB, ' '); s(SB, x)),
+    ((s(S7, x); s(S7, ' ')), (s(S8, x); s(S8, ' ')), (s(SA, x); s(SA, ' ')), (s(SB, ' '); s(SB, x))),
+    (s(SA, x), s(S8, x)),
 
-    retract(s(S4, ' ')), assert(s(S4, x)),
-    write([S4, 30]), nl,
+    (
+        (
+            (s(S1, x); s(S1, ' ')), s(S2, ' '), s(S4, x), s(SA, x), s(S8, x),
+            retract(s(S2, ' ')), assert(s(S2, x)), write([S2, 31]), nl
+        );
+        (
+            (s(S1, x); s(S1, ' ')), s(S4, ' '), s(S2, x), s(SA, x), s(S8, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S5, ' '), s(S4, x), s(SA, x), s(S8, x),
+            retract(s(S5, ' ')), assert(s(S5, x)), write([S5, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S4, ' '), s(S5, x), s(SA, x), s(S8, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+
+        (
+            s(SA, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S8, x),
+            retract(s(SA, ' ')), assert(s(SA, x)), write([SA, 31]), nl
+        );
+        (
+            s(S8, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SA, x),
+            retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 31]), nl
+        )
+    ),
+
     vypis_p,
     test_v(x).
 
@@ -1512,24 +1424,50 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        ((s(S2, x); s(S4, x)), (s(S1, x); s(S1, ' '))); 
+        ((s(S4, x); s(S5, x)), (s(SZ, x); s(SZ, ' ')))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
     (s(S4, x); s(S4, ' ')),
     (s(S5, x); s(S5, ' ')),
-    (s(SZ, x); s(SZ, ' ')),
 
     s(S9, _),
     o6(S9, S4, SA, SB, SC, SD),
     S9 \= S3,
     
     s(SA, ' '),
-    (s(SD, ' '); s(SD, x)), s(SB, x), s(SC, x), (s(S9, ' '); s(S9, x)),
+    (s(SD, ' '); s(SD, x)), (s(SB, x); s(SB, ' ')), (s(SC, x); s(SC, ' ')), (s(S9, ' '); s(S9, x)),
+    (s(SB, x); s(SC, x)),
 
-    retract(s(S4, ' ')), assert(s(S4, x)),
-    write([S4, 30]), nl,
+    (
+        (
+            (s(S1, x); s(S1, ' ')), s(S2, ' '), s(S4, x), s(SC, x), s(SB, x),
+            retract(s(S2, ' ')), assert(s(S2, x)), write([S2, 31]), nl
+        );
+        (
+            (s(S1, x); s(S1, ' ')), s(S4, ' '), s(S2, x), s(SC, x), s(SB, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S5, ' '), s(S4, x), s(SC, x), s(SB, x),
+            retract(s(S5, ' ')), assert(s(S5, x)), write([S5, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S4, ' '), s(S5, x), s(SC, x), s(SB, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+
+        (
+            s(SC, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SB, x),
+            retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 31]), nl
+        );
+        (
+            s(SB, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SC, x),
+            retract(s(SB, ' ')), assert(s(SB, x)), write([SB, 31]), nl
+        )
+    ),
+
     vypis_p,
     test_v(x).
 
@@ -1537,27 +1475,52 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        ((s(S2, x); s(S4, x)), (s(S1, x); s(S1, ' '))); 
+        ((s(S4, x); s(S5, x)), (s(SZ, x); s(SZ, ' ')))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
     (s(S4, x); s(S4, ' ')),
     (s(S5, x); s(S5, ' ')),
-    (s(SZ, x); s(SZ, ' ')),
 
     s(S8, _),
     o6(S8, S9, S4, SA, SB, SC),
     S9 \= S3,
     
     s(SA, ' '),
-    (s(SC, x); s(SC, ' ')), s(SB, x), s(S9, x), (s(S8, ' '); s(S8, x)),
+    (s(SC, x); s(SC, ' ')), (s(SB, x); s(SB, ' ')), (s(S9, x), s(S9, ' ')), (s(S8, ' '); s(S8, x)),
+    (s(SB, x); s(S9, x)),
 
-    retract(s(S4, ' ')), assert(s(S4, x)),
-    write([S4, 30]), nl,
+    (
+        (
+            (s(S1, x); s(S1, ' ')), s(S2, ' '), s(S4, x), s(S9, x), s(SB, x),
+            retract(s(S2, ' ')), assert(s(S2, x)), write([S2, 31]), nl
+        );
+        (
+            (s(S1, x); s(S1, ' ')), s(S4, ' '), s(S2, x), s(S9, x), s(SB, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S5, ' '), s(S4, x), s(S9, x), s(SB, x),
+            retract(s(S5, ' ')), assert(s(S5, x)), write([S5, 31]), nl
+        );
+        (
+            (s(SZ, x); s(SZ, ' ')), s(S4, ' '), s(S5, x), s(S9, x), s(SB, x),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 31]), nl
+        );
+
+        (
+            s(S9, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(SB, x),
+            retract(s(S9, ' ')), assert(s(S9, x)), write([S9, 31]), nl
+        );
+        (
+            s(SB, ' '), ((s(S2, x); s(S4, x)); (s(S4, x); s(S5, x))), s(S9, x),
+            retract(s(SB, ' ')), assert(s(SB, x)), write([SB, 31]), nl
+        )
+    ),
+
     vypis_p,
     test_v(x).
-*/
 
 % Robíme kříže - položení čtvrtého pole, pravidlo 10
 
@@ -1644,65 +1607,49 @@ tp :-
     vypis_p,
     test_v(x).
 
-% Robíme paralelní trojice - položení druhého pole, pravidlo 17
+% Položení L - třetí pole, pravidlo 50
 
 tp :-
-    s(S2, ' '), o2(S1, S2, S3, S4, S5),
-    s(S1, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y), [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    (s(S8, x); s(S8, ' ')), o3(S6, S7, S8, S9, _),
-    (
-        (s(S7, ' '), s(S8, x));
-        (s(S7, x), s(S8, ' '));
-        (s(S8, x), s(S9, ' '));
-        (s(S8, ' '), s(S9, x))
-    ),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 17.1]), nl)
-    ),
-    vypis_p,
-    test_v(x).
-
-tp :-
-    s(S1, ' '), o(S1, S2, S3, S4, S5),
-    (s(S2, ' '); s(S2, x)), (s(S3, ' '), s(S3, x)), (s(S4, ' '), s(S4, x)), s(S5, ' '),
-    (s(S2, x); s(S3, x); s(S4, x)),
+    s(S3, x),
+    o3(S1, S2, S3, S4, S5),
+    (s(S1, ' '); s(S1, x)), (s(S2, ' '); s(S2, x)), (s(S4, ' '); s(S4, x)), (s(S5, ' '); s(S5, x)),
 
     [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
     (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
+        (
+            S1X = S6X, S5X = SAX, 
+            ((SAY is S5Y-2, S6Y is S1Y-2); (SAY is S5Y+2, S6Y is S1Y+2))
+        );
+        (
+            S1Y = S6Y, S5Y = SAY, 
+            (SAX is S5X-2, S6X is S1X-2; SAX is S5X+2, S6X is S1X+2)
+        )
     ),
     S6 = [S6X, S6Y],
+    SA = [SAX, SAY],
 
-    s(S8, ' '), o3(S6, S7, S8, S9, _),
-    s(S8, ' '),
-    (
-        (s(S2, x), s(S7, ' ')),
-        (s(S3, x), (s(S7, ' '); s(S9, ' '))),
-        (s(S4, x), s(S9, ' '))
-    ),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
+    o(S6, S7, S8, S9, SA),
+    S3 \= S8, S2 \= S7,
+    (s(S8, ' '); s(S8, x)),
+    (s(S7, ' '); s(S7, x)),(s(S9, ' '); s(S9, x)),
 
     (
-        (retract(s(S8, ' ')), assert(s(S8, x)), write([S8, 17.2]), nl)
+        (
+            s(S2, x), s(S7, x), s(S3, ' '),
+            retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 51]), nl
+        );
+        (
+            s(S3, x), s(S8, x), s(S6, ' '),
+            retract(s(S2, ' ')), assert(s(S2, x)), write([S2, 52]), nl
+        );
+        (
+            s(S3, x), s(S8, x), s(S9, ' '),
+            retract(s(S4, ' ')), assert(s(S4, x)), write([S4, 53]), nl
+        );
+        (
+            s(S4, x), s(S9, x), s(S3, ' '),
+            retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 54]), nl
+        )
     ),
     vypis_p,
     test_v(x).
@@ -1745,33 +1692,6 @@ tp :-
     s(S7, x), s(S8, x), s(S9, ' '),
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 11]), nl,
-    vypis_p,
-    test_v(x).
-
-% Robíme paralelní trojice - položení prvního pole, pravidlo 18
-
-tp :-
-    s(S2, ' '), o2(S1, S2, S3, S4, S5),
-    s(S1, ' '), s(S3, ' '), s(S4, ' '), s(S5, ' '),
-
-    [S1X, S1Y] = S1, [S5X, S5Y] = S5, (S1X = S5X; S1Y = S5Y),
-    (
-        (S1X = S6X, (S6Y is S1Y-2; S6Y is S1Y+2));
-        (S1Y = S6Y, (S6X is S1X-2; S6X is S1X+2))
-    ),
-    S6 = [S6X, S6Y],
-
-    s(S7, ' '), o2(S6, S7, S8, S9, _),
-    s(S7, ' '), (s(S6, ' '); s(S8, ' ')),
-
-    s(SB, ' '), o(SB, SC, SD, SE, SF),
-    SB \= S1, SB \= S6,
-    (SC = S2; SC = S7), (SE = S4; SE = S9),
-    s(SB, ' '), s(SD, ' '), s(SF, ' '),
-
-    (
-        (retract(s(S3, ' ')), assert(s(S3, x)), write([S3, 18]), nl)
-    ),
     vypis_p,
     test_v(x).
 
@@ -1859,6 +1779,14 @@ tah(S) :-
     test_v(o),
     % true.
     tp.
+
+% Manuální tah počítače
+tp(X,Y) :- tp([X, Y]).
+tp(S) :-
+    s(S, ' '),
+    retract(s(S, ' ')), assert(s(S, x)),
+    vypis_p,
+    test_v(x).
 
 % Objekty - 5 polí
 o([X, Y], [X1, Y], [X2, Y], [X3, Y], [X4, Y]) :-
