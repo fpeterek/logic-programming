@@ -1082,30 +1082,22 @@ tp :-
     S8 \= S3,
     (s(S8, ' '); s(S8, o)),
     (s(S7, ' '); s(S7, o)),(s(S9, ' '); s(S9, o)),
-    % write(S1), write(S5), nl,
-    % write(S6), write(SA), nl,
 
     s(SB, _),
-
     (
         (
             (s(S2, o); s(S4, o)), s(S8, o), 
-            write('S3: '), write(S3), write(', S8: '), write(S8), nl,
             (o(SB, S3, SC, S8, SE); o(SB, S8, SC, S3, SE)),
             retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 20]), nl
         );
         (
             s(S4, o), s(S9, o), 
-            write('S4: '), write(S4), write(', S9: '), write(S9), nl,
             (o(SB, S4, SC, S9, SE); o(SB, S9, SC, S4, SE)),
-            write(bb),
             retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 20]), nl
         );
         (
             s(S2, o), s(S7, o), 
-            write('S2: '), write(S2), write(', S7: '), write(S7), nl,
             (o(SB, S2, SC, S7, SE); o(SB, S7, SC, S2, SE)),
-            write(cc),
             retract(s(SC, ' ')), assert(s(SC, x)), write([SC, 20]), nl
         )
     ),
