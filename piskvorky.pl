@@ -239,8 +239,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S3, ' '),
     (
-        (s(S2, x), s(S4, x), (s(S1, x); s(S1, ' '))); 
-        (s(S4, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S4, x)); 
+        (s(S4, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -252,7 +252,11 @@ tp :-
     S9 \= S2,
     
     s(S9, ' '),
-    ((s(S6, ' '); s(S6, x)), s(S7, x), s(S8, x), (s(SA, ' '); s(SA, x))),
+    (s(S7, x), s(S8, x)),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S6, ' '); s(S6, o)); (s(SA, ' '); s(SA, o))
+    ),
 
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 30]), nl,
@@ -263,8 +267,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S3, ' '),
     (
-        (s(S2, x), s(S4, x), (s(S1, x); s(S1, ' '))); 
-        (s(S4, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S4, x)); 
+        (s(S4, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -276,7 +280,11 @@ tp :-
     S9 \= S2,
     
     s(S9, ' '),
-    ((s(S7, x); s(S7, ' ')), s(S8, x), s(SA, x), (s(SB, ' '); s(SB, x))),
+    (s(S8, x), s(SA, x)),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S7, ' '); s(S7, o)); (s(SB, ' '); s(SB, o))
+    ),
 
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 30]), nl,
@@ -287,8 +295,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S3, ' '),
     (
-        (s(S2, x), s(S4, x), (s(S1, x); s(S1, ' '))); 
-        (s(S4, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S4, x)); 
+        (s(S4, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -300,7 +308,11 @@ tp :-
     S9 \= S2,
     
     s(SA, ' '),
-    (s(SD, ' '); s(SD, x)), s(SB, x), s(SC, x), (s(S9, ' '); s(S9, x)),
+    s(SB, x), s(SC, x),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S9, ' '); s(S9, o)); (s(SD, ' '); s(SD, o))
+    ),
 
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 30]), nl,
@@ -311,8 +323,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S3, ' '),
     (
-        (s(S2, x), s(S4, x), (s(S1, x); s(S1, ' '))); 
-        (s(S4, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S4, x)); 
+        (s(S4, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -324,7 +336,11 @@ tp :-
     S9 \= S2,
     
     s(SA, ' '),
-    (s(SC, x); s(SC, ' ')), s(SB, x), s(S9, x), (s(S8, ' '); s(S8, x)),
+    s(SB, x), s(S9, x),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S8, ' '); s(S8, o)); (s(SC, ' '); s(SC, o))
+    ),
 
     retract(s(S3, ' ')), assert(s(S3, x)),
     write([S3, 30]), nl,
@@ -337,8 +353,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -351,7 +367,11 @@ tp :-
     S9 \= S3,
     
     s(S9, ' '),
-    (s(S6, ' '); s(S6, x)), s(S7, x), s(S8, x), (s(SA, ' '); s(SA, x)),
+    s(S7, x), s(S8, x),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S6, ' '); s(S6, o)); (s(SA, ' '); s(SA, o))
+    ),
 
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 30]), nl,
@@ -362,8 +382,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -376,7 +396,11 @@ tp :-
     S9 \= S3,
     
     s(S9, ' '),
-    (s(S7, x); s(S7, ' ')), s(S8, x), s(SA, x), (s(SB, ' '); s(SB, x)),
+    s(S8, x), s(SA, x),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S7, ' '); s(S7, o)); (s(SB, ' '); s(SB, o))
+    ),
 
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 30]), nl,
@@ -387,8 +411,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -401,7 +425,11 @@ tp :-
     S9 \= S3,
     
     s(SA, ' '),
-    (s(SD, ' '); s(SD, x)), s(SB, x), s(SC, x), (s(S9, ' '); s(S9, x)),
+    s(SB, x), s(SC, x),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S9, ' '); s(S9, o)); (s(SD, ' '); s(SD, o))
+    ),
 
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 30]), nl,
@@ -412,8 +440,8 @@ tp :-
     s(S1, _), o6(S1, S2, S3, S4, S5, SZ),
     s(S4, ' '),
     (
-        (s(S2, x), s(S3, x), (s(S1, x); s(S1, ' '))); 
-        (s(S3, x), s(S5, x), (s(SZ, x); s(SZ, ' ')))
+        (s(S2, x), s(S3, x)); 
+        (s(S3, x), s(S5, x))
     ),
     (s(S2, x); s(S2, ' ')),
     (s(S3, x); s(S3, ' ')),
@@ -426,7 +454,11 @@ tp :-
     S9 \= S3,
     
     s(SA, ' '),
-    (s(SC, x); s(SC, ' ')), s(SB, x), s(S9, x), (s(S8, ' '); s(S8, x)),
+    s(SB, x), s(S9, x),
+    (
+        (s(S1, ' '); s(S1, o)); (s(SZ, ' '); s(SZ, o));
+        (s(S8, ' '); s(S8, o)); (s(SC, ' '); s(SC, o))
+    ),
 
     retract(s(S4, ' ')), assert(s(S4, x)),
     write([S4, 30]), nl,
