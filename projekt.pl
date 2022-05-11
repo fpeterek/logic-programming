@@ -18,6 +18,7 @@ run :-
 process(end_of_file).
 
 % Process one line of user input, print the result to stdout
+% In - a string input by the user
 % process('x & b > c').
 process(In) :-
     In \== end_of_file,
@@ -27,6 +28,8 @@ process(In) :-
 
 % Eliminate implication and equivalence operators, convert the result to a string
 % return the result using the Res variable
+% Sentece - a string representation of formula
+% Res - a string reperesentation of a formula with equivalence and implication operators removed
 % convert('x & b > c', Res).
 convert(Sentence, Res) :-
     atom_chars(Sentence, Atoms),
@@ -36,6 +39,8 @@ convert(Sentence, Res) :-
 
 % Eliminates implications and equivalences, however, unlike convert, eliminate
 % accepts a list of atoms, not a string, a returns a tree representation
+% Atoms - input formula as atomic chars
+% Res - output formula as atomic chars
 % eliminate(['a', '&', 'b'], Res).
 eliminate(Atoms, Res) :-
     filter_space(Atoms, NoSpaces),
@@ -46,6 +51,8 @@ eliminate(Atoms, Res) :-
     elim_opers(SimplifiedTree, Res).
 
 % Accepts a tree representation and flattens it to atomic chars
+% First argument - tree representation
+% Second argument - sequential list representation of the input tree
 % flatten(['&', ['>', 'a', 'b'], 'c'], Flat)
 
 flatten(['(', Tree], Res) :-
@@ -73,12 +80,17 @@ flatten(Atom, [Atom]).
 /***********************************************/
 
 % Parses a list of atoms into a tree representation
+% Terms - input formula represented as a list of atomic chars
+% Res - tree representation of the input
 % translate_equivalence(['a', '&', 'b', '>', 'c'], Res).
 
 translate_equivalence(Terms, Res) :- translate_equivalence_([], Terms, Res).
 
 % Inner helper function with a helper aggregator, should not be called by itself
 % Expects to be provided with an empty list as its firts argument
+% Left - left side of the operator
+% Right - right side of the operator
+% Res - result
 
 translate_equivalence_([], ['=' | _], _) :- throw(missing_operand_equiv).
 translate_equivalence_(_, ['='], _) :- throw(missing_operand_equiv).
@@ -104,12 +116,17 @@ translate_equivalence_(Left, [], Res) :-
 
 % Parses a list of atoms into a tree representation - does not parse equivalences
 % Assumes all equivalence operators have been removed by now
+% Terms - input formula represented as a list of atomic chars
+% Res - tree representation of the input
 % translate_implication(['a', '&', 'b', '>', 'c'], Res).
 
 translate_implication(Terms, Res) :- translate_implication_([], Terms, Res).
 
 % Inner helper function with a helper aggregator, should not be called by itself
 % Expects to be provided with an empty list as its firts argument
+% Left - left side of the operator
+% Right - right side of the operator
+% Res - result
 
 translate_implication_([], ['>' | _], _) :- throw(missing_operand_impl).
 translate_implication_(_, ['>'], _) :- throw(missing_operand_impl).
@@ -135,12 +152,17 @@ translate_implication_(Left, [], Res) :-
 
 % Parses a list of atoms into a tree representation
 % Assumes all equivalence and implication operators have been removed by now
+% Terms - input formula represented as a list of atomic chars
+% Res - tree representation of the input
 % translate_disjunction(['a', '&', 'b', '>', 'c'], Res).
 
 translate_disjunction(Terms, Res) :- translate_disjunction_([], Terms, Res).
 
 % Inner helper function with a helper aggregator, should not be called by itself
 % Expects to be provided with an empty list as its firts argument
+% Left - left side of the operator
+% Right - right side of the operator
+% Res - result
 
 translate_disjunction_([], ['|' | _], _) :- throw(missing_operand_disj).
 translate_disjunction_(_, ['|'], _) :- throw(missing_operand_disj).
@@ -166,12 +188,17 @@ translate_disjunction_(Left, [], Res) :-
 
 % Parses a list of atoms into a tree representation
 % Assumes all operators of lower precedence have already been parsed
+% Terms - input formula represented as a list of atomic chars
+% Res - tree representation of the input
 % translate_conjunction(['a', '&', 'b', '>', 'c'], Res).
 
 translate_conjunction(Terms, Res) :- translate_conjunction_([], Terms, Res).
 
 % Inner helper function with a helper aggregator, should not be called by itself
 % Expects to be provided with an empty list as its firts argument
+% Left - left side of the operator
+% Right - right side of the operator
+% Res - result
 
 translate_conjunction_([], ['&' | _], _) :- throw(missing_operand_conj).
 translate_conjunction_(_, ['&'], _) :- throw(missing_operand_conj).
@@ -197,11 +224,17 @@ translate_conjunction_(Left, [], Res) :-
 
 % Parses a list of atoms into a tree representation
 % Assumes all operators of lower precedence have already been parsed
+% Terms - input formula represented as a list of atomic chars
+% Res - tree representation of the input
 % translate_negation(['a', '&', 'b', '>', 'c'], Res).
 
 translate_negation(Terms, Res) :- translate_negation_(Terms, Res).
 
 % Inner helper function, should not be called by itself
+% First argument - negation operator
+% Second argument - operand of negation
+% Assumes all other operators have already been processed
+% and thus accepts only an operator and an operand as its input
 
 translate_negation_([], []).
 
@@ -225,6 +258,9 @@ translate_negation_([Head | Right], Res) :-
 % Handles statements in parenthesis. Parenthesis are represented in the tree
 % using a special construction to provide the ability to reparenthesise the statements
 % which the user wrapped in parenthesis in the input statement
+% Input - input formula represented as a list of atomic chars,
+%         the formula is assumed to be wrapped in parenthesis
+% Output - tree representation of the formula in parenthesis
 % translate_parens(['(', 'a', '&', 'b', ')', '>', 'c'], Res).
 
 translate_parens([], []).
@@ -244,6 +280,10 @@ translate_parens([Head | Tail], [Head | Res]) :- translate_parens(Tail, Res).
 
 % Inner function which handles nested parenthesis - should not be called
 % by itself
+
+% First argument - the beginning of a formula in nested parenthesis (opening paren excluded) 
+% ParensContent - the content of said parenthesis represented as a tree
+% Rest - what is left of the input after consuming the parenthesis
 
 translate_inner_parens([], _, _) :- throw(missing_paren).
 
@@ -268,6 +308,7 @@ translate_inner_parens([Head | Atoms], [Head | ParensContent], Rest) :-
 /***********************************************/
 
 % Validates syntax and ensures the input is valid
+% Argument - a tree representation of a formula
 % validate(['+', 'a', 'b']).
 
 validate([]) :- throw(empty_statement).
@@ -326,6 +367,8 @@ validate(_).
 
 % Accepts a tree representation of the input statement and eliminates
 % equivalence and implication operators
+% Argument - a tree representation of a formula
+% Result - a tree representation of a formula with equivalence and implication operators removed
 % elim_opers(['=', ['!', 'a'], 'b'], Result).
 
 elim_opers(['=', Left, Right], Res) :-
@@ -373,6 +416,8 @@ elim_opers(Any, Any).
 
 % Recursively flattens lists which only contain one element into the only element
 % Otherwise, returns the input list
+% Tree - tree representation of a formula
+% Res - the input tree with lists of just one element flattened
 % rm_unnecessary_nesting([['a']], 'a')
 % rm_unnecessary_nesting([['a']], Flattened)
 
@@ -390,7 +435,8 @@ rm_unnecessary_nesting_(Atom, Atom).
 
 % Filters space characters from input as whitespace characters have no effect
 % on the meaning of a term
-% Input is a list of atomic chars
+% Input - list of atomic chars
+% Output - list of atomic chars with space characters filtered out
 % filter_space(['a', ' ', '=', ' ', ' ', 'b', ' '], NoSpaces)
 
 filter_space([], []).
